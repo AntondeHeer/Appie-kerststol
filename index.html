@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Appie en het Geheim van de Kerststol</title><style>*{box-sizing:border-box}body{margin:0;background:#100f23;color:#f8e5b3;font-family:Georgia,serif;text-align:center}h1{font-size:clamp(19px,4vw,34px);margin:12px 0 4px;color:#ffdc83}p{margin:4px 10px 10px}canvas{display:block;width:min(100vw,1100px);height:auto;margin:auto;image-rendering:pixelated;border:4px solid #9b6c35;touch-action:manipulation}#panel{max-width:1100px;margin:auto;background:#17152e;border:3px solid #9b6c35;padding:10px;min-height:95px}#say{min-height:42px;font-size:clamp(15px,2.5vw,21px)}button{background:#30274c;color:#ffdf9e;border:2px solid #aa7b43;border-radius:4px;padding:9px 12px;margin:4px;font:inherit;font-weight:bold}button:active{background:#705132}small{display:block;color:#d1b78c;margin:5px}</style></head><body><h1>APPIE EN HET GEHEIM VAN DE KERSTSTOL</h1><p>Rotterdam, december 1900 · Een point-and-click avontuur</p><canvas id="game" width="960" height="540" aria-label="Winterse straat voor Banketbakkerij Van der Heijden"></canvas><section id="panel"><div id="say">Appie: “Daar is Sophia... Misschien kan ik even door het raam gluren.”</div><button onclick="look()">👀 Kijk door raam</button><button onclick="talk()">💬 Praat met Bikkel</button><button onclick="goMarket()">➡ Naar de markt</button><small>Tik op de straat om Appie te laten lopen. Bikkel volgt hem.</small></section><script>
+const c=document.getElementById('game'),x=c.getContext('2d'),say=document.getElementById('say');x.imageSmoothingEnabled=false;let px=145,tx=145,step=0,market=false,snow=[];for(let i=0;i<85;i++)snow.push([Math.random()*960,Math.random()*540,1+Math.random()*3]);
+function rect(a,b,w,h,col){x.fillStyle=col;x.fillRect(a,b,w,h)}function txt(t,a,b,size=19,color='#fff0c3'){x.fillStyle=color;x.font=`bold ${size}px Georgia`;x.fillText(t,a,b)}function circle(a,b,r,col){x.fillStyle=col;x.beginPath();x.arc(a,b,r,0,Math.PI*2);x.fill()}
+function draw(){rect(0,0,960,540,'#182444');rect(0,0,960,210,'#1a315a');for(let i=0;i<20;i++)circle((i*97)%960,(i*43)%190,1,'#e6d8b9');rect(0,190,960,350,'#334056');
+// old Rotterdam buildings
+for(let i=0;i<5;i++){let a=i*205-50;rect(a,108,190,295,i%2?'#51404b':'#644451');rect(a+12,93,165,24,'#473341');for(let j=0;j<3;j++){rect(a+20+j*51,141,30,46,'#221e37');rect(a+24+j*51,145,22,37,'#d9a45c')}}
+// bakery façade
+rect(290,75,505,345,'#51332e');for(let i=0;i<20;i++)rect(290+i*25,76+(i%2)*8,23,9,'#7e4e44');rect(305,106,470,85,'#231d22');rect(314,115,452,67,'#392b24');txt('BANKETBAKKERIJ',435,139,21,'#eec982');txt('Van der Heijden',355,169,36,'#ffd18a');rect(318,205,450,202,'#241a21');rect(330,215,315,174,'#d59b59');rect(336,221,303,162,'#805034');rect(336,302,303,80,'#4b2c2c');rect(653,215,102,174,'#38292a');rect(658,219,92,170,'#98633c');rect(697,225,7,162,'#332629');
+// glass mullions and warm bakery interior
+rect(478,216,8,170,'#30242c');rect(336,283,303,8,'#34252c');for(let i=0;i<5;i++){rect(355+i*51,303,34,17,'#c68a43');rect(360+i*51,309,26,9,'#e1b56a')}
+// baker and Patricia silhouettes
+circle(549,249,17,'#e5ae81');rect(532,264,35,43,'#e5dcc2');rect(530,232,39,11,'#f4e6cf');circle(595,250,14,'#e6b18d');rect(581,263,28,43,'#f0dfc7');rect(580,233,29,10,'#b7a18a');
+// Sophia
+circle(391,259,16,'#edbc95');rect(378,275,27,36,'#b6556e');rect(378,253,27,4,'#4b3029');circle(387,259,3,'#282334');circle(398,259,3,'#282334');
+// window glint
+rect(345,225,5,53,'#edc892');rect(624,228,4,51,'#edc892');
+// festive garlands, old gas lamps, no stollen
+for(let i=0;i<12;i++){circle(326+i*38,199+(i%2)*5,8,'#214d36');circle(327+i*38,198+(i%2)*5,2,i%3?'#c13d3d':'#f6ca6d')}rect(240,225,8,225,'#202333');rect(228,207,32,30,'#e9b25f');rect(232,210,24,24,'#ffe6a0');rect(220,204,48,6,'#2d2935');
+// street snow
+rect(0,407,960,133,'#d2d9dd');rect(0,434,960,106,'#67758b');for(let i=0;i<19;i++){rect(i*57,450+(i%2)*28,51,4,'#a5b0b8');rect(i*57+11,508,41,3,'#8c9aa9')}
+// arrow sign
+rect(39,290,7,115,'#3c2b29');rect(10,304,115,31,'#69492c');txt('MARKT ←',19,325,17);rect(10,343,115,31,'#69492c');txt('HAVEN →',18,364,17);
+// dog Bikkel: WHITE with BLACK eye patch
+let bx=px-60;rect(bx-9,413,44,24,'#f5f2e8');rect(bx+24,400,23,26,'#f5f2e8');rect(bx+24,397,15,13,'#292632');rect(bx+32,406,13,14,'#292632');rect(bx-3,434,10,13,'#eee9df');rect(bx+22,434,10,13,'#eee9df');rect(bx-18,414,13,7,'#f5f2e8');circle(bx+43,416,3,'#14151e');rect(bx+27,425,14,4,'#b33e43');
+// Appie red-green cap, orange scarf, blue jacket
+rect(px-13,389,25,44,'#31599a');rect(px-10,428,9,20,'#63452f');rect(px+4,428,9,20,'#63452f');rect(px-14,445,15,6,'#3c2b27');rect(px+3,445,15,6,'#3c2b27');circle(px,377,15,'#efc28b');rect(px-17,364,36,8,'#3a773f');for(let j=0;j<4;j++)rect(px-15+j*9,363,5,8,'#ae343b');rect(px-15,372,40,5,'#3b5c31');rect(px-10,392,25,7,'#c34b2d');rect(px+8,397,6,24,'#c34b2d');circle(px+8,379,2,'#212337');
+for(const s of snow){circle(s[0],s[1],s[2]*.6,'#f0f4ff');s[1]+=s[2]*.22;if(s[1]>540){s[1]=0;s[0]=Math.random()*960}}
+if(Math.abs(px-tx)>1)px+=(tx-px)*.08;requestAnimationFrame(draw)}
+c.addEventListener('pointerdown',e=>{let r=c.getBoundingClientRect(),a=(e.clientX-r.left)*960/r.width,b=(e.clientY-r.top)*540/r.height;if(b>375){tx=Math.max(80,Math.min(860,a));say.textContent='Appie loopt verder. Bikkel hobbelt vrolijk achter hem aan.'}else if(a>325&&a<660){look()}else if(a<135){goMarket()}});
+function look(){const lines=['Appie: “Psst, Bikkel! Daar is Sophia!”','Bakker Anton: “De zaken gaan slecht... en Kerstmis komt eraan.”','Patricia: “Kunnen we niet iets bijzonders bakken voor Kerstmis?”','Bakker Anton: “Ik heb alleen meel en gist. Geen boter, geen vruchten... niets bijzonders.”','Appie: “Ik weet het! Op de markt en in de haven ligt genoeg lekkers. Ik ga Sophia helpen!”'];say.textContent=lines[Math.min(step,4)];step=Math.min(step+1,5)}function talk(){say.textContent='Appie: “Wat denk jij, Bikkel?”  Bikkel: “Woef!”  Appie: “Precies. Eerst naar de markt!”'}function goMarket(){if(step<4){say.textContent='Appie: “Eerst maar eens horen wat er in de bakkerij aan de hand is.”';return}say.textContent='🎉 Einde van de eerste proefscène! Volgende halte: de botermarkt. Die bouwen we hierna.';tx=80}draw();
+</script></body></html>
