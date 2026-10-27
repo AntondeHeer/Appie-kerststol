@@ -2010,6 +2010,17 @@ document.getElementById('bakeryReturnButton').addEventListener('click',()=>{docu
  const overlay=document.getElementById('appieOutroOverlay');
  const frame=document.getElementById('appieOutroFrame');
  const outroData='scenes/5ac7405fdad63769.html';
+ // De outro staat in /scenes/, terwijl de afbeeldingen in /images/ staan.
+ // Herstel de relatieve paden zodra de outro in het iframe geladen is.
+ frame.addEventListener('load',function(){
+  try{
+   const doc=frame.contentDocument;
+   if(!doc)return;
+   doc.querySelectorAll('.slide img[src^="images/"]').forEach(img=>{
+    img.src='../'+img.getAttribute('src');
+   });
+  }catch(err){console.warn('Outro-afbeeldingen konden niet worden hersteld:',err)}
+ });
  let begun=false;
  const bakeryFrame=document.getElementById('bakeryIntegratedFrame');
  // The baking scene is a nested iframe, so search both levels.
