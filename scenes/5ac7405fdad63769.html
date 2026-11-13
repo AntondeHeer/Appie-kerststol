@@ -10,18 +10,20 @@
 .fireworks{z-index:3}.snow{z-index:4}
 @media(max-width:600px){.sky-title{font-size:clamp(30px,7vw,56px)}.sky-greeting{font-size:clamp(16px,3.6vw,28px)}}
 
-.final-actions{position:absolute;z-index:8;bottom:7%;left:0;right:0;display:flex;gap:16px;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
+.final-actions{position:absolute;z-index:8;bottom:5%;left:0;right:0;display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
 .final-actions.visible{opacity:1;pointer-events:auto}
-.final-actions button{font-size:clamp(14px,2vw,22px);background:#583015e8;border:3px solid #e7b85e;color:#ffe7a9;padding:12px 22px}
+@media(max-width:600px){.final-actions{gap:6px;bottom:4%}.final-actions button,.final-actions a{font-size:11px;padding:7px 8px;border-width:2px}}
+.final-actions button,.final-actions a{font-size:clamp(14px,2vw,22px);background:#583015e8;border:3px solid #e7b85e;color:#ffe7a9;padding:12px 22px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:bold;border-radius:5px;cursor:pointer}
 .end-screen{position:absolute;inset:0;z-index:12;background:linear-gradient(#101c38,#07101e);display:none;align-items:center;justify-content:center;flex-direction:column;gap:22px;padding:25px;text-align:center}
 .end-screen.visible{display:flex}
 .end-screen h1{font-size:clamp(25px,4.2vw,50px);margin:0;color:#ffe1a2}
 .end-screen p{font-size:clamp(16px,2.3vw,25px);margin:0}
+ .final-actions #openBakersBook{flex:0 0 100%;width:max-content;max-width:100%;margin:0;flex-direction:column;gap:3px;text-align:center;line-height:1.15;background:linear-gradient(#a86c27,#6b3716);box-shadow:0 0 14px #e9ad4b66}.book-subtitle{font-size:.75em;font-weight:normal}@media(max-width:600px){.final-actions #openBakersBook{max-width:90%;font-size:13px}.book-subtitle{font-size:10px}}
 </style></head><body><main class="stage"><div class="frame" id="frame"><section class="slide" data-i="0"><img src="images/d58d290daf3f8486.png" alt="Outro scène 1"><div class="caption">En zo bakten Appie en Anton samen hun allereerste kerststol. Niemand kon toen nog vermoeden hoeveel er zouden volgen…</div></section>
 <section class="slide" data-i="1"><img src="images/c3e531d558153af2.png" alt="Outro scène 2"><div class="caption">Al snel moest er dag en nacht gebakken worden. Appie hielp Anton met het deeg, terwijl Nihat de ene na de andere stol uit de oven haalde.</div></section>
 <section class="slide" data-i="2"><img src="images/26523af88a3c7a8e.png" alt="Outro scène 3"><div class="caption">Het nieuws verspreidde zich door heel Rotterdam. Voor de winkel van Van der Heijden stond een lange rij: iedereen wilde zo’n bijzondere kerststol!</div></section>
 <section class="slide" data-i="3"><img src="images/899e9438f74768bd.png" alt="Outro scène 4"><div class="caption">Als dank mocht Appie samen met Bikkel kerst vieren bij Anton, Patricia en Sophia. Anton was zo moe dat hij in zijn stoel in slaap viel. Voor Appie was het de fijnste kerst die hij ooit had beleefd.</div></section>
-<section class="slide" data-i="4"><img src="images/097010b28c450f79.png" alt="Outro scène 5"></section><div class="sky-messages" id="skyMessages"><div class="sky-title" id="theEnd">THE END</div><div class="sky-greeting" id="greeting">Prettige Kerstdagen<br>en een Gelukkig Nieuwjaar!</div></div><div class="final-actions" id="finalActions"><button id="playAgain">↻ Opnieuw spelen</button><button id="closeGame">✕ Spel afsluiten</button></div>
+<section class="slide" data-i="4"><img src="images/097010b28c450f79.png" alt="Outro scène 5"></section><div class="sky-messages" id="skyMessages"><div class="sky-title" id="theEnd">THE END</div><div class="sky-greeting" id="greeting">Prettige Kerstdagen<br>en een Gelukkig Nieuwjaar!</div></div><div class="final-actions" id="finalActions"><a id="openBakersBook" href="https://appiedebengel.nl/bakkerboek-test.html" target="_top" rel="noopener">🎁 Maak kans op een prijs!<span class="book-subtitle">📖 Antons Grote Bakkersboek</span></a><button id="playAgain">↻ Opnieuw spelen</button><button id="closeGame">✕ Spel afsluiten</button></div>
 <div class="end-screen" id="endScreen"><h1 id="endHeading">Bedankt voor het spelen!</h1><p id="endMessage">Prettige Kerstdagen en een Gelukkig Nieuwjaar!</p><button id="returnDemo">↻ Terug naar het begin</button></div>
 <canvas class="snow" id="snow"></canvas><canvas class="fireworks" id="fireworks"></canvas></div></main><script>
 const slides=[...document.querySelectorAll('.slide')],counter=document.querySelector('#counter');
