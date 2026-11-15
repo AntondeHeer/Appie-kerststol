@@ -241,6 +241,19 @@ update();
 @media(max-width:700px){#appie-music-toggle{width:135px!important;height:110px!important;left:4px!important;bottom:6px!important}}
 @media(prefers-reduced-motion:reduce){#appie-music-toggle .appie-music-notes{animation:none!important}}
 </style>
+<script id="appie-game-statistics">
+/* Anonieme spelstatistieken; geen persoonsgegevens. */
+(function(){
+ const endpoint='https://strsssxpnrtkogwsjtme.supabase.co/rest/v1/rpc/appie_tel';
+ const apiKey='sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS';
+ const sent=new Set();
+ window.appieGameStat=function(event){
+  if(sent.has(event))return;
+  sent.add(event);
+  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','apikey':apiKey,'Authorization':'Bearer '+apiKey},body:JSON.stringify({p_onderdeel:'spel',p_gebeurtenis:event}),keepalive:true}).catch(function(error){console.warn('Appie statistieken:',error)});
+ };
+})();
+</script>
 <script id="appie-cinematic-intro-script">
 (function(){
 'use strict';
@@ -251,7 +264,7 @@ const art=document.getElementById('appie-cinematic-art');
 const caption=document.getElementById('appie-cinematic-caption');
 const skip=document.getElementById('appie-cinematic-skip');
 let index=-1,timer=null,fadeTimer=null,changing=false,finished=false;
-function start(){if(index!==-1)return;if(typeof window.appieStartMusic==='function')window.appieStartMusic();index=0;overlay.classList.add('playing');caption.style.display='flex';show();}
+function start(){if(index!==-1)return;if(window.appieGameStat)window.appieGameStat('gestart');if(typeof window.appieStartMusic==='function')window.appieStartMusic();index=0;overlay.classList.add('playing');caption.style.display='flex';show();}
 function show(){clearTimeout(timer);clearTimeout(fadeTimer);if(index>=scenes.length){finish();return;}changing=true;art.style.opacity='0';fadeTimer=setTimeout(()=>{if(finished)return;const item=scenes[index];art.src=item.src;art.alt=item.alt;caption.textContent=item.text;art.style.opacity='1';changing=false;timer=setTimeout(next,7000)},430)}
 function next(){if(finished||index<0||changing)return;index++;show()}
 function finish(){if(finished)return;finished=true;clearTimeout(timer);clearTimeout(fadeTimer);art.style.opacity='0';caption.style.opacity='0';setTimeout(()=>{document.documentElement.classList.add('appie-intro-done');overlay.remove();const old=document.getElementById('appie-title-menu');if(old)old.remove();if(typeof setScene==='function')setScene('intro');else if(typeof scene!=='undefined'){scene='intro';index=0;sceneTime=performance.now();}},700)}
@@ -2041,7 +2054,7 @@ document.getElementById('bakeryReturnButton').addEventListener('click',()=>{docu
    const doc=bakeryFrame.contentDocument;
    if(!doc)return;
    if(findFinalSpeech(doc)){
-    if(!lastSpeechSeen){lastSpeechSeen=true;setTimeout(begin,2700);}
+    if(!lastSpeechSeen){lastSpeechSeen=true;if(window.appieGameStat)window.appieGameStat('voltooid');setTimeout(begin,2700);}
    }
   }catch(e){}
  }
@@ -2062,7 +2075,7 @@ document.getElementById('bakeryReturnButton').addEventListener('click',()=>{docu
   }catch(e){frame.src=outroData;}
  }
  window.addEventListener('message',function(e){
-  if(e.data&&e.data.appieBakeryFinished===true)begin();
+  if(e.data&&e.data.appieBakeryFinished===true){if(window.appieGameStat)window.appieGameStat('voltooid');begin();}
   if(e.data&&e.data.appieOutroAction==='restart'&&e.source===frame.contentWindow){
    window.location.reload();
   }
