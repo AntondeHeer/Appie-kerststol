@@ -250,7 +250,7 @@ update();
  window.appieGameStat=function(event){
   if(sent.has(event))return;
   sent.add(event);
-  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','apikey':apiKey,'Authorization':'Bearer '+apiKey},body:JSON.stringify({p_onderdeel:'spel',p_gebeurtenis:event}),keepalive:true}).catch(function(error){console.warn('Appie statistieken:',error)});
+  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','apikey':apiKey,'Authorization':'Bearer '+apiKey},body:JSON.stringify({p_onderdeel:'spel_desktop',p_gebeurtenis:event}),keepalive:true}).catch(function(error){console.warn('Appie statistieken:',error)});
  };
 })();
 </script>
